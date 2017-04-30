@@ -35,8 +35,10 @@
 
 ;; Determines whether a year is a leap year or not
 (define (is-leap-year? year)
-  (cond [(equals? (modulo year 400) 0) True]
-        [(equals? (modulo year 100) 0) False]
-        [(equals? (modulo year 4) 0) True]))
+  (cond [(equal? (modulo year 400) 0) #t]
+        [(equal? (modulo year 100) 0) #f]
+        [(equal? (modulo year 4) 0) #t]))
 
-
+(check-expect (is-leap-year? 2016) #t)
+(check-expect (is-leap-year? 1700) #f)
+(check-expect (is-leap-year? 2400) #t)
