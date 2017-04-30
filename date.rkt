@@ -33,4 +33,10 @@
 (check-expect (month-to-number "February") 2)
 (check-expect (month-to-number "October") 6)
 
+;; Determines whether a year is a leap year or not
+(define (is-leap-year? year)
+  (cond [(equals? (modulo year 400) 0) True]
+        [(equals? (modulo year 100) 0) False]
+        [(equals? (modulo year 4) 0) True]))
+
 
