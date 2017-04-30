@@ -37,11 +37,13 @@
 (define (is-leap-year? year)
   (cond [(equal? (modulo year 400) 0) #t]
         [(equal? (modulo year 100) 0) #f]
-        [(equal? (modulo year 4) 0) #t]))
+        [(equal? (modulo year 4) 0) #t]
+        [else #f]))
 
 (check-expect (is-leap-year? 2016) #t)
 (check-expect (is-leap-year? 1700) #f)
 (check-expect (is-leap-year? 2400) #t)
+(check-expect (is-leap-year? 2017) #f)
 
 ;; Calculates codes of leap years between 2000-2096
 (define (21st-century-leap-year-to-number year)
@@ -62,5 +64,13 @@
 (check-expect (21st-century-leap-year-to-number 2072) 6)
 (check-expect (21st-century-leap-year-to-number 2096) 1)
 
+;; Calculates all 21st century years
+(define (21st-century-year-to-number year)
+  (cond [(is-leap-year? year) (21st-century-leap-year-to-number year)]
+        [else (+ (21st-century-year-to-number (- year 1)) 1)]))
 
+(check-expect (21st-century-year-to-number 2000) 0)
+(check-expect (21st-century-year-to-number 2009) 4)
+(check-expect (21st-century-year-to-number 2001) 1)
+(check-expect (21st-century-year-to-number 2010) 5)
 
