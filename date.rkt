@@ -17,8 +17,8 @@
 
 ; Converts month in to its respective numerical code
 (define (month-to-number month)
-  (cond [(equal? month "January") 6]
-        [(equal? month "February") 2]
+  (cond [(equal? month "January") 6] ; becomes 5 on leap years
+        [(equal? month "February") 2] ; becomes 1 on leap years
         [(equal? month "March") 2]
         [(equal? month "April") 5]
         [(equal? month "May") 0]
@@ -42,3 +42,25 @@
 (check-expect (is-leap-year? 2016) #t)
 (check-expect (is-leap-year? 1700) #f)
 (check-expect (is-leap-year? 2400) #t)
+
+;; Calculates codes of leap years between 2000-2096
+(define (21st-century-leap-year-to-number year)
+  (cond [(and (>= year 2000) (<= year 2024))
+         (cond [(equal? year 2000) 0]
+               [(equal? year 2004) 5]
+               [(equal? year 2008) 3]
+               [(equal? year 2012) 1]
+               [(equal? year 2016) 6]
+               [(equal? year 2020) 4]
+               [(equal? year 2024) 2])]
+         [else (21st-century-leap-year-to-number (- year 28))]))
+
+(check-expect (21st-century-leap-year-to-number 2000) 0)
+(check-expect (21st-century-leap-year-to-number 2028) 0)
+(check-expect (21st-century-leap-year-to-number 2032) 5)
+(check-expect (21st-century-leap-year-to-number 2064) 3)
+(check-expect (21st-century-leap-year-to-number 2072) 6)
+(check-expect (21st-century-leap-year-to-number 2096) 1)
+
+
+
