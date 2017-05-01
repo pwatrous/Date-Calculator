@@ -74,3 +74,37 @@
 (check-expect (21st-century-year-to-number 2001) 1)
 (check-expect (21st-century-year-to-number 2010) 5)
 
+;; Calculates year code for any year before 2000
+(define (before-2000-to-number year)
+  (cond [(and (>= year 1900) (< year 2000))
+         (+ (21st-century-year-to-number (+ year 100)) 1)]
+        [(and (>= year 1800) (< year 1900))
+         (+ (21st-century-year-to-number (+ year 200)) 3)]
+        [(and (>= year 1700) (< year 1800))
+         (+ (21st-century-year-to-number (+ year 300)) 5)]
+        [else (21st-century-year-to-number (+ year 400))]))
+
+(check-expect (before-2000-to-number 1900) 1)
+(check-expect (before-2000-to-number 1800) 3)
+(check-expect (before-2000-to-number 1700) 5)
+(check-expect (before-2000-to-number 1600) 0)
+(check-expect (before-2000-to-number 1999) 5)
+(check-expect (before-2000-to-number 1810) 8)
+
+;; Calculates year code for any year after 2100
+(define (after-2100-to-number year)
+  (cond [(and (>= year 2100) (< year 2200))
+         (+ (21st-century-year-to-number (- year 100)) 5)]
+        [(and (>= year 2200) (< year 2300))
+         (+ (21st-century-year-to-number (- year 200)) 3)]
+        [(and (>= year 2300) (< year 2400))
+         (+ (21st-century-year-to-number (- year 300)) 1)]
+        [else (21st-century-year-to-number (- year 400))]))
+
+(check-expect (after-2100-to-number 2100) 5)
+(check-expect (after-2100-to-number 2200) 3)
+(check-expect (after-2100-to-number 2300) 1)
+(check-expect (after-2100-to-number 2400) 0)
+(check-expect (after-2100-to-number 2109) 9)
+(check-expect (after-2100-to-number 2201) 4)
+(check-expect (after-2100-to-number 2301) 2)
